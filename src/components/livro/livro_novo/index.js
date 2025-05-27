@@ -8,6 +8,10 @@ export default function NovoLivro(){
 
     const [Id,setId] = useState('');
     const [Titulo,setTitulo] = useState('');
+    const {Autor,setAutor} = useState('');
+    const {Genero,setGenero} = useState('');
+    const {Disponivel,setDisponivel} = useState('');
+    const {CategoriaId,setCategoriaId} = useState('');
 
     async function postLivro(event){
         const data = {

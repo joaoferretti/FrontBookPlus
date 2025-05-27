@@ -11,7 +11,7 @@ export default function AlterarLivro() {
     const {Genero,setGenero} = useState('');
     const {Disponivel,setDisponivel} = useState('');
     const {CategoriaId,setCategoriaId} = useState('');
-    const [Load,setLoad] = useState(false);
+    const [load,setLoad] = useState(false);
 
     const loadLivro = useCallback(async() => {
         try {

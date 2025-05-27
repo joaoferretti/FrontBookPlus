@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './styles.css';
-import logoLivro from '../../assets/Estado.png';
+import logoLivro from '../../../assets/Estado.png';
 import api from "../../../services/api";
 import { Link } from "react-router";
 import { FiEdit, FiTrash } from "react-icons/fi";

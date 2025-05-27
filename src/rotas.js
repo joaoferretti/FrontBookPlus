@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router";
-import Livros from "./components/livro_lista";
-import NovoLivros from "./components/livro_novo";
-import ExcluirLivros from "./components/livro_excluir";
-import AlterarLivros from "./components/livro_alterar";
+import Livro from "./components/livro/livro_lista";
+import NovoLivro from "./components/livro/livro_novo";
+import ExcluirLivro from "./components/livro/livro_excluir";
+import AlterarLivro from "./components/livro/livro_alterar";
 
 export default function Rotas(){
     return (
@@ -15,10 +15,10 @@ export default function Rotas(){
                         <Link className="button" to="livro">Livros</Link>
                     </div>
                 } />
-                <Route path="/livro" element={<Livros />} />
-                <Route path="/livro/novo" element={<NovoLivros />} />
-                <Route path="/livro/excluir/:sigla" element={<ExcluirLivros />} />
-                <Route path="/livro/alterar/:sigla" element={<AlterarLivros />} />
+                <Route path="/livro" element={<Livro />} />
+                <Route path="/livro/novo" element={<NovoLivro />} />
+                <Route path="/livro/excluir/:sigla" element={<ExcluirLivro />} />
+                <Route path="/livro/alterar/:sigla" element={<AlterarLivro />} />
             </Routes>
         </BrowserRouter>
     )
