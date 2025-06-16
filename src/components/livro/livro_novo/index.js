@@ -1,54 +1,47 @@
-import React, { useState } from "react";
-import './styles.css';
-import {FiCornerDownLeft, FiFilePlus} from "react-icons/fi";
-import { Link } from "react-router";
-import api from "../../../services/api";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../../services/api';
 
-export default function NovoLivro(){
+export default function LivroNovo() {
+  const [titulo, setTitulo] = useState('');
+  const [genero, setGenero] = useState('');
+  const [ano, setAno] = useState('');
+  const [autorId, setAutorId] = useState('');
+  const [categoriaId, setCategoriaId] = useState('');
+  const [autores, setAutores] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const navigate = useNavigate();
 
-    const [id, setId] = useState('');
-    const [titulo, setTitulo] = useState('');
-    const [autor, setAutor] = useState('');
-    const [genero, setGenero] = useState('');
-    const [disponivel, setDisponivel] = useState('');
-    const [categoriaId, setCategoriaId] = useState('');
+  useEffect(() => {
+    api.get('/autores').then(res => setAutores(res.data));
+    api.get('/categorias').then(res => setCategorias(res.data));
+  }, []);
 
-    async function postLivro(event){
-        const data = {
-            id,
-            titulo,
-            autor,
-            genero,
-            disponivel,
-            categoriaId
-        }
-        try{
-            await api.post('Livros', data).then(alert("Livro cadastro"));
-        }catch(error) {
-            alert("Erro ao salvar livro " + error);
-        }
-    }
+  const salvar = (e) => {
+    e.preventDefault();
+    api.post('/livros', { titulo, genero, ano, autorId, categoriaId })
+      .then(() => navigate('/livro'))
+      .catch(error => console.error('Erro ao salvar livro:', error));
+  };
 
-    return(
-        <div className="novo-livro-container">
-            <div className="content">
-                <section className="form">
-                    <FiFilePlus size={105} color="#17202a" />
-                    <h1>Novo Livro</h1>
-                    <Link className="back-link" to="/livro">
-                        <FiCornerDownLeft size={105} color="#17202a" />
-                    </Link>
-                </section>
-                <form onSubmit={postLivro}>
-                    <input placeholder="Id" maxLength={2} onChange={(e => setId(e.target.value))} />
-                    <input placeholder="Titulo" onChange={(e => setTitulo(e.target.value))}/>
-                    <input placeholder="Autor" onChange={(e => setAutor(e.target.value))}/>
-                    <input placeholder="Genero" onChange={(e => setGenero(e.target.value))}/>
-                    <input placeholder="Disponivel" onChange={(e => setDisponivel(e.target.value))}/>
-                    <input placeholder="CategoriaId" onChange={(e => setCategoriaId(e.target.value))}/>
-                    <button className="button" type="submit">Salvar</button>
-                </form>
-            </div>
-        </div>
-    )
+  return (
+    <form onSubmit={salvar}>
+      <h2>Novo Livro</h2>
+      <input type="text" placeholder="Título" value={titulo} onChange={e => setTitulo(e.target.value)} required />
+      <input type="text" placeholder="Gênero" value={genero} onChange={e => setGenero(e.target.value)} required />
+      <input type="number" placeholder="Ano" value={ano} onChange={e => setAno(e.target.value)} required />
+      
+      <select value={autorId} onChange={e => setAutorId(e.target.value)} required>
+        <option value="">Selecione o autor</option>
+        {autores.map(a => <option key={a.id} value={a.id}>{a.nome}</option>)}
+      </select>
+      
+      <select value={categoriaId} onChange={e => setCategoriaId(e.target.value)} required>
+        <option value="">Selecione a categoria</option>
+        {categorias.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
+      </select>
+
+      <button type="submit">Salvar</button>
+    </form>
+  );
 }

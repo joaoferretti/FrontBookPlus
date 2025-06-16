@@ -1,52 +1,84 @@
-.novo-livro-container{
-    width: 100%;
-    max-width: 1120px;
-    height: 100vh;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .novo-livro-container .content{
-    width: 100%;
-    padding: 96px;
-    background: #f0f0f5;
-    box-shadow: 0 0  100px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .novo-livro-container .content section{
-    width: 100%;
-    max-width: 380px;
-  }
-  
-  .novo-livro-container section.form{
-    width: 100%;
-    max-width: 350px;
-    margin-right: 30px;
-  }
-  
-  .novo-livro-container section.form img{
-    width: 45%;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
-  
-  .novo-livro-container .content section h1{
-    margin: 64px 0 32px;
-    font-size: 32px;
-  }
-  
-  .novo-livro-container .content form{
-    width: 100%;
-    max-width: 450px;
-  }
-  
-  .novo-livro-container .content form input{
-    margin-top: 8px;
-  }
+/* Paleta */
+:root {
+  --rich-black: #04080F;
+  --glaucous: #507DBC;
+  --powder-blue: #A1C6EA;
+  --columbia-blue: #BBD1EA;
+  --platinum: #DAE3E5;
+  --white: #ffffff;
+}
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--platinum);
+  color: var(--rich-black);
+  line-height: 1.6;
+}
+
+/* Containers e títulos */
+h1, h2, h3 {
+  color: var(--rich-black);
+}
+
+div {
+  padding: 1rem;
+  margin: 1rem auto;
+  max-width: 900px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Botões */
+button, a.button-link {
+  background-color: var(--glaucous);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover, a.button-link:hover {
+  background-color: var(--powder-blue);
+}
+
+/* Formulários */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+input, select {
+  padding: 0.5rem;
+  border: 1px solid var(--columbia-blue);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Listas */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--columbia-blue);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
