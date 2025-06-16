@@ -17,8 +17,8 @@ export default function Rotas(){
                 } />
                 <Route path="/livro" element={<Livro />} />
                 <Route path="/livro/novo" element={<NovoLivro />} />
-                <Route path="/livro/excluir/:sigla" element={<ExcluirLivro />} />
-                <Route path="/livro/alterar/:sigla" element={<AlterarLivro />} />
+                <Route path="/livro/excluir/:id" element={<ExcluirLivro />} />
+                <Route path="/livro/alterar/:id" element={<AlterarLivro />} />
             </Routes>
         </BrowserRouter>
     )

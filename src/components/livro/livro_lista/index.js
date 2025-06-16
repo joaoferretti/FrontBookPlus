@@ -11,7 +11,7 @@ export default function Livros(){
 
     useEffect(() => {
         if(lista.length <= 0){
-            api.get('livro').then(
+            api.get('Livros').then(
                 response => {setLista(response.data);}
             )
         }
@@ -37,20 +37,20 @@ export default function Livros(){
                     {
                         lista.map(item => (
                            <tr>
-                            <td>{item.Id}</td>
-                            <td>{item.Titulo}</td>
-                            <td>{item.Autor}</td>
-                            <td>{item.Genero}</td>
-                            <td>{item.Disponivel}</td>
-                            <td>{item.CategoriaId}</td>
+                            <td>{item.id}</td>
+                            <td>{item.titulo}</td>
+                            <td>{item.autor}</td>
+                            <td>{item.genero}</td>
+                            <td>{item.disponivel === 1 ? 'Sim' : 'Não'}</td>
+                            <td>{item.categoriaId}</td>
                             <td className="tdOpcoes">
-                                <Link to={`alterar/${item.Id}`}>
+                                <Link to={`alterar/${item.id}`}>
                                     <button type="button">
                                         <FiEdit size={25} color="#17202a" />
                                     </button>
                                 </Link>
                                 {" "}
-                                <Link to={`excluir/${item.Id}`}>
+                                <Link to={`excluir/${item.id}`}>
                                     <button type="button">
                                         <FiTrash size={25} color="#17202a" />
                                     </button>

@@ -6,25 +6,25 @@ import api from "../../../services/api";
 
 export default function NovoLivro(){
 
-    const [Id,setId] = useState('');
-    const [Titulo,setTitulo] = useState('');
-    const {Autor,setAutor} = useState('');
-    const {Genero,setGenero} = useState('');
-    const {Disponivel,setDisponivel} = useState('');
-    const {CategoriaId,setCategoriaId} = useState('');
+    const [id, setId] = useState('');
+    const [titulo, setTitulo] = useState('');
+    const [autor, setAutor] = useState('');
+    const [genero, setGenero] = useState('');
+    const [disponivel, setDisponivel] = useState('');
+    const [categoriaId, setCategoriaId] = useState('');
 
     async function postLivro(event){
         const data = {
-            Id,
-            Titulo,
-            Autor,
-            Genero,
-            Disponivel,
-            CategoriaId
+            id,
+            titulo,
+            autor,
+            genero,
+            disponivel,
+            categoriaId
         }
         try{
-            await api.post('Livro',data).then(alert("Livro cadastro"));
-        }catch(error){
+            await api.post('Livros', data).then(alert("Livro cadastro"));
+        }catch(error) {
             alert("Erro ao salvar livro " + error);
         }
     }
