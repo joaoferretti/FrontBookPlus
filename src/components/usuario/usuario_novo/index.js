@@ -15,7 +15,7 @@ export default function NovoUsuario() {
         const obj = { nome, email };
 
         api.post('Usuarios', obj)
-            .then(() => navigate('/usuario'))
+            .then(() => navigate('/'))
             .catch(error => alert(error));
     }
 

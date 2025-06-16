@@ -1,108 +1,58 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { FiCornerDownLeft, FiFileText } from "react-icons/fi";
-import { Link, useParams } from "react-router-dom";
-import api from "../../../services/api";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../../../services/api';
 
-export default function AlterarLivro() {
+export default function LivroAlterar() {
+  const { id } = useParams();
+  const [titulo, setTitulo] = useState('');
+  const [genero, setGenero] = useState('');
+  const [disponivel, setDisponivel] = useState('');
+  const [categoriaId, setCategoriaId] = useState('');
+  const [autor, setAutor] = useState('');
+  const [categorias, setCategorias] = useState([]);
+  const navigate = useNavigate();
 
-    const { id } = useParams();
-    const [titulo,setTitulo] = useState('');
-    const [autor,setAutor] = useState('');
-    const [genero,setGenero] = useState('');
-    const [disponivel,setDisponivel] = useState('');
-    const [categoriaId,setCategoriaId] = useState('');
-    const [load,setLoad] = useState(false);
-    debugger;
-    const loadLivro = useCallback(async() => {
-        try {
-                await api.get('Livros/'+id)
-                .then(
-                    response => setTitulo(response.data.titulo) 
-                )     
-            } catch (error) {
-                alert("Erro ao carregar livro " + error)
-            }
-    },[id,setTitulo])
-    
-    useEffect(() => {
-        if(!load){
-            loadLivro();
-            setLoad(true);
-        }
-    },[setLoad,load,loadLivro])
+  useEffect(() => {
+    api.get(`/Livros/${id}`).then(res => {
+      const livro = res.data;
+      setTitulo(livro.titulo);
+      setGenero(livro.genero);
+      setAutor(livro.autor);
+      setDisponivel(livro.disponivel);
+      setCategoriaId(livro.categoriaId);
+    });
+    api.get('/categorias').then(res => setCategorias(res.data));
+  }, [id]);
 
-    async function putLivro(event) {
-        const data = {
-            id,
-            titulo
-        }
-        try {
-        await api.put('Livros', data);
-        alert("Livro alterado");
-    }catch(error){
-        alert("Erro ao excluir livro " + error);
-    }
+    function atualizar(e) {
+        e.preventDefault();
+
+        const obj = {id, titulo, autor, genero, disponivel, categoriaId };
+
+        api.put(`/Livros/${id}`, obj)
+            .then(() => navigate('/livro'))
+            .catch(error => alert(error));
     }
 
-    return(
-        <div>
-        <div className="novo-livro-container">
-            <div className="form">
-                <section className="form">
-                        <FiFileText size={105} color="#17202a" />
-                        <h1>Alterar Livro</h1>
-                        <Link className="back-link" to="/livro">
-                            <FiCornerDownLeft size={105} color="#17202a" />
-                        </Link>
-                </section>
-                <form onSubmit={putLivro}>
-                    <input placeholder="Id" value={id} readOnly/>
-                    <input placeholder="Titulo" value={titulo} onChange={e => setTitulo(e.target.value)} />
-                    <button className="button" type="submit">Salvar</button>
-                </form>
+  return (
+    <form onSubmit={atualizar}>
+      <h2>Alterar Livro</h2>
+      <input type="text" value={titulo} onChange={e => setTitulo(e.target.value)} required />
+      <input type="text" value={genero} onChange={e => setGenero(e.target.value)} required />
+      <input type="text" value={autor} onChange={e => setAutor(e.target.value)} required />
+      
+      <label>
+          <input type="radio" name="disponivel" value="false" checked={disponivel === 'false'} onChange={(e) => setDisponivel(e.target.value)}/>
+          Disponivel
+      </label>
+      
+      
+      <select value={categoriaId} onChange={e => setCategoriaId(e.target.value)} required>
+        <option value="">Selecione a categoria</option>
+        {categorias.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
+      </select>
 
-                {/* <form onSubmit={putLivro}> VERIFICAR A NECESSIDADE DE TER TODOS OS PARAMETROS
-
-                    <input placeholder="Id" value={id} readOnly />
-
-                    <input
-                        placeholder="Titulo"
-                        value={titulo}
-                        onChange={(e) => setTitulo(e.target.value)}
-                    />
-
-                    <input
-                        placeholder="Autor"
-                        value={autor}
-                        onChange={(e) => setAutor(e.target.value)}
-                    />
-
-                    <input
-                        placeholder="Gênero"
-                        value={genero}
-                        onChange={(e) => setGenero(e.target.value)}
-                    />
-
-                    <input
-                        type="number"
-                        placeholder="Categoria ID"
-                        value={categoriaId}
-                        onChange={(e) => setCategoriaId(Number(e.target.value))}
-                    />
-
-                    <label>
-                        Disponível:
-                        <input
-                            type="checkbox"
-                            checked={disponivel}
-                            onChange={(e) => setDisponivel(e.target.checked)}
-                        />
-                    </label>
-                    
-                    <button className="button" type="submit">Salvar</button>
-                </form> */}
-            </div>
-        </div>
-    </div>
-    )
+      <button type="submit">Atualizar</button>
+    </form>
+  );
 }

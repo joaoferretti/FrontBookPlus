@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../services/api';
+import api from '../../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 export default function EmprestimoNovo() {
@@ -17,7 +17,7 @@ export default function EmprestimoNovo() {
   const salvar = (e) => {
     e.preventDefault();
     api.post('/emprestimos', { livroId, usuarioId })
-      .then(() => navigate('/emprestimo'))
+      .then(() => navigate('/emprestimo/lista'))
       .catch((error) => console.error('Erro ao registrar empréstimo:', error));
   };
 

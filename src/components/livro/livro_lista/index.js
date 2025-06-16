@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../../services/api';
+import api from '../../../services/api';
 import { Link } from 'react-router-dom';
 
 export default function LivroLista() {
@@ -26,7 +26,7 @@ export default function LivroLista() {
       <ul>
         {livros.map(livro => (
           <li key={livro.id}>
-            {livro.titulo} - {livro.genero} - {livro.ano} - {livro.autor?.nome} - {livro.categoria?.nome}
+            {livro.titulo} - {livro.genero} - {livro.autor} - {livro.autor?.nome} - {livro.categoria?.nome}
             <Link to={`/livro/alterar/${livro.id}`} className="button-link">Editar</Link>
             <button onClick={() => excluir(livro.id)}>Excluir</button>
           </li>
